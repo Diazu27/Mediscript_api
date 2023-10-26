@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import DB from './db/connection';
+import cors from 'cors';
 
 import DoctorRoutes from './routes/doctor.routes';
+import AuthRoutes from './routes/auth.routes';
 
 export class App  {
   private app: express.Application;
@@ -16,10 +18,12 @@ export class App  {
 
   private config():void{
     this.app.use(express.json());
+    this.app.use(cors())
   }
 
   private routes():void{
-    this.app.use('/api/doctors', DoctorRoutes)
+    this.app.use('/api/doctor', DoctorRoutes);
+    this.app.use('/api/auth', AuthRoutes)
   }
 
   private async DBConnection(){
