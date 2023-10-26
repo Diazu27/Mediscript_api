@@ -7,7 +7,7 @@ const Doctor = new DoctorController();
 DoctorRoutes.get('/',Doctor.getDoctors);
 DoctorRoutes.get('/:id',Doctor.getDoctorByID);
 DoctorRoutes.post('/',Doctor.saveDoctor);
-DoctorRoutes.put('/',Doctor.updateDoctor);
-DoctorRoutes.delete('/',Doctor.deleteDoctor);
+DoctorRoutes.put('/:id',Doctor.updateDoctor);
+DoctorRoutes.delete('/:id',Doctor.deleteDoctor);
 
 export default DoctorRoutes;

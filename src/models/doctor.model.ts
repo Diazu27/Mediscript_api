@@ -1,7 +1,8 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import DB from '../db/connection';
+import { DoctorDBI } from '../interfaces/doctor.interface';
 
-const DoctorModel =DB.define('Doctor', {
+const DoctorModel =DB.define<DoctorDBI>('Doctor', {
   DoctorID: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

@@ -1,10 +1,12 @@
-interface DoctorI {
+import Model, { NonNullFindOptions } from "sequelize/types/model";
+
+export interface DoctorI {
     DoctorID: number;
     FirstName: string | null;
     LastName: string | null;
     Email: string | null;
     DateOfBirth: Date | null;
-    Password: string | null;
+    Password: string;
     RegistrationDate: Date | null;
     Gender: string | null;
     IdentityNumber: string | null;
@@ -14,5 +16,6 @@ interface DoctorI {
     ClinicID: number | null;
 }
   
-export default DoctorI;
+export interface DoctorDBI extends Model<DoctorI>, DoctorI {}
+
   
