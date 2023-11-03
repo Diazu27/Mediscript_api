@@ -6,7 +6,7 @@ export interface DoctorI {
     LastName: string | null;
     Email: string | null;
     DateOfBirth: Date | null;
-    Password: string;
+    Password: string ;
     RegistrationDate: Date | null;
     Gender: string | null;
     IdentityNumber: string | null;

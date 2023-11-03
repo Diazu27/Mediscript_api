@@ -35,6 +35,8 @@ export class AuthenticationController {
                     let secret:Secret = process.env.JWT_SECRET || '';
                     var Token = jwt.sign({ DoctorID: Doctor.DoctorID }, secret);
                     res.status(200).json({ Token: Token, message: 'Autenticado' });
+                }else{
+                    res.status(401).json({ status: 401, message: 'Correo o contraseña incorrectos' });
                 }
             }else{
                 res.status(401).json({ status: 401, message: 'Correo o contraseña incorrectos' });
