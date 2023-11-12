@@ -6,6 +6,10 @@ const Auth = new AuthenticationController();
 
 AuthRoutes.post('/registdoctor', Auth.registerDoctor);
 AuthRoutes.post('/logindoctor', Auth.LoginDoctorAuth);
+AuthRoutes.post('/registerpatient', Auth.registerPatient);
+AuthRoutes.post('/logindoctor', Auth.LoginDoctorAuth);
+AuthRoutes.post('/loginpatient', Auth.LoginPatientAuth);
+
 
 
 

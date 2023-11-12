@@ -1,7 +1,8 @@
 import { DataTypes } from 'sequelize';
 import DB from '../db/connection';
+import { PatientDBI } from '../interfaces/patient.interface';
 
-const PatientModel = DB.define('Patient', {
+const PatientModel = DB.define<PatientDBI>('Patient', {
     PatientID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -46,7 +47,7 @@ const PatientModel = DB.define('Patient', {
   }, {
     tableName: 'patient',
     timestamps: false,
-    underscored: true, 
   });
 
   export default PatientModel;
+  

@@ -6,6 +6,8 @@ import DoctorRoutes from './routes/doctor.routes';
 import AuthRoutes from './routes/auth.routes';
 import { ValidateJWT } from './middlewares/ValidateJWT';
 import MedicationRoutes from './routes/medication.routes';
+import PatientRoutes from './routes/patient.routes';
+import PrescriptionRoutes from './routes/prescription.routes';
 
 export class App  {
   private app: express.Application;
@@ -25,7 +27,9 @@ export class App  {
 
   private routes():void{
     this.app.use('/api/medication',ValidateJWT, MedicationRoutes);
+    this.app.use('/api/patient',ValidateJWT, PatientRoutes);
     this.app.use('/api/doctor',ValidateJWT, DoctorRoutes);
+    this.app.use('/api/prescription',ValidateJWT, PrescriptionRoutes);
     this.app.use('/api/auth', AuthRoutes)
   }
 

@@ -1,3 +1,5 @@
+import { Model } from "sequelize";
+
 export interface MedicationI {
     MedicationID: number;
     Name: string | null;
@@ -9,5 +11,8 @@ export interface MedicationI {
     Contraindications: string | null;
     RegistrationDate: Date | null;
     ClinicID: number | null;
-    Creator: number | null;
+    DoctorID: number | null;
 }
+
+
+export interface MedicationDBI extends Model<MedicationI>, MedicationI {}

@@ -1,3 +1,6 @@
+import { Model } from "sequelize";
+import { PrescriptionDetailI } from "./prescriptionDetail.interface";
+
 export interface PrescriptionI {
     PrescriptionID: number;
     PatientID: number | null;
@@ -10,3 +13,14 @@ export interface PrescriptionI {
     PrescriptionStatus: number | null;
     RegistrationDate: Date | null;
 }
+
+export interface PrescriptionPostI {
+    PatientID: number | null;
+    IssueDate: Date | null;
+    ExpiryDate: Date | null;
+    Diagnosis: string | null;
+    Comments: string | null;
+    MedicationSelected: PrescriptionDetailI[];
+}
+
+export interface PrescriptionDBI extends Model<PrescriptionI>, PrescriptionI {}

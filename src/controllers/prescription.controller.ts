@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import PrescriptionModel from "../models/prescription.model";
 import { sendResponse } from "../utils/sendResponse";
+import { PrescriptionI, PrescriptionPostI } from "../interfaces/prescription.interface";
+import { getDoctorID } from "../utils/getDoctorID";
+import { PrescriptionDetailI } from "../interfaces/prescriptionDetail.interface";
+import PrescriptionDetail from "../models/prescriptionDetail.model";
 
 export class PrescriptionController {
 
@@ -24,9 +28,23 @@ export class PrescriptionController {
 
     async savePrescription(req: Request, res: Response): Promise<void> {
         try {
-            const prescription = await PrescriptionModel.create(req.body);
+            const PrescriptionData:PrescriptionI = req.body;
+            const DoctorID = getDoctorID(req);
+            PrescriptionData.DoctorID = DoctorID; 
+            const prescription = await PrescriptionModel.create(PrescriptionData);
+
+            const MedicationSelectedData:PrescriptionPostI = req.body;
+            const MedicationSelected:PrescriptionDetailI[] = MedicationSelectedData.MedicationSelected;
+
+            MedicationSelected.forEach(Medication => {
+                Medication.PrescriptionID = prescription.PrescriptionID; 
+            });
+
+            const prescriptionDetail = await PrescriptionDetail.bulkCreate(MedicationSelected);            
+
             sendResponse(prescription, res, "Created successfully");
         } catch (error) {
+            console.log(error)
             res.status(500).json({ status: 500, message: 'Internal Server Error' });
         }
     }
