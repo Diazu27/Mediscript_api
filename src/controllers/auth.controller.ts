@@ -6,6 +6,7 @@ import { DoctorI } from "../interfaces/doctor.interface";
 import jwt, { Secret } from 'jsonwebtoken';
 import PatientModel from "../models/patient.model";
 import { PatientI } from "../interfaces/patient.interface";
+import { Sequelize } from "sequelize";
 
 export class AuthenticationController {
    
@@ -54,7 +55,9 @@ export class AuthenticationController {
     async LoginPatientAuth(req: Request, res: Response): Promise<void> {
         try {
             const { Email,Password }:PatientI = req.body;
-            const Patient = await PatientModel.findOne({where:{Email:Email}});
+            const Patient = await PatientModel.findOne({ where:
+                Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Email')), 'LIKE', Email)
+            });
     
             if (Patient && Patient.Password !== null){
                 const passwordMatch = await bcrypt.compare(Password, Patient.Password);

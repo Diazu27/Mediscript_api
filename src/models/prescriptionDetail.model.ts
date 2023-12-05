@@ -1,6 +1,8 @@
 import { DataTypes } from 'sequelize';
 import DB from '../db/connection';
 import { PrescriptionDetailDBI } from '../interfaces/prescriptionDetail.interface';
+import PrescriptionModel from './prescription.model';
+import MedicationModel from './medication.model';
 
 
 const PrescriptionDetail = DB.define<PrescriptionDetailDBI>('prescritiondetail', {
@@ -12,10 +14,18 @@ const PrescriptionDetail = DB.define<PrescriptionDetailDBI>('prescritiondetail',
     PrescriptionID: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references:{
+        model:PrescriptionModel,
+        key:'PrescriptionID',
+      }
     },
     MedicationID: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references:{
+        model:MedicationModel,
+        key:"MedicationID"
+      }
     },
     TimeInterval: {
       type: DataTypes.INTEGER,
@@ -37,9 +47,30 @@ const PrescriptionDetail = DB.define<PrescriptionDetailDBI>('prescritiondetail',
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    SpecificHour: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    AdministrationRoute: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    DayTimeSection: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    isContinue: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   }, {
-    tableName: 'prescritiondetail', // Asegúrate de usar el nombre de la tabla correcto
+    tableName: 'prescritiondetail',
     timestamps: false,
   });
   
+  MedicationModel.hasMany(PrescriptionDetail, {foreignKey:'MedicationID'})
+  PrescriptionDetail.belongsTo(MedicationModel, { foreignKey: 'MedicationID' });
+
+  PrescriptionModel.hasMany(PrescriptionDetail, {foreignKey:'PrescriptionID'})
+  PrescriptionDetail.belongsTo(PrescriptionModel, { foreignKey: 'PrescriptionID' });
   export default PrescriptionDetail;

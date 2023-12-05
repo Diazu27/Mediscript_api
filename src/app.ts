@@ -8,6 +8,8 @@ import { ValidateJWT } from './middlewares/ValidateJWT';
 import MedicationRoutes from './routes/medication.routes';
 import PatientRoutes from './routes/patient.routes';
 import PrescriptionRoutes from './routes/prescription.routes';
+import PrescriptionPatientRoutes from './routes/prescriptionPatient.routes';
+import PrescriptionDoctorRoutes from './routes/prescriptiondoctor.routes';
 
 export class App  {
   private app: express.Application;
@@ -30,6 +32,8 @@ export class App  {
     this.app.use('/api/patient',ValidateJWT, PatientRoutes);
     this.app.use('/api/doctor',ValidateJWT, DoctorRoutes);
     this.app.use('/api/prescription',ValidateJWT, PrescriptionRoutes);
+    this.app.use('/api/prescriptionPatient',ValidateJWT, PrescriptionPatientRoutes);
+    this.app.use('/api/prescriptionDoctor',ValidateJWT, PrescriptionDoctorRoutes);
     this.app.use('/api/auth', AuthRoutes)
   }
 

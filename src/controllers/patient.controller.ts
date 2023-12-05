@@ -36,7 +36,6 @@ export class PatientController {
     async updatePatient(req: Request, res: Response): Promise<void> {
         try {
             let PatientID = getPatientID(req);
-            console.log(PatientID);
             const patient = await PatientModel.findByPk(PatientID);
             patient?.update(req.body);
             patient?.save();
@@ -45,8 +44,19 @@ export class PatientController {
             res.status(500).json({ status: 500, message: 'Internal Server Error' });
         }
     }
+
+    async getPatientByToken(req: Request, res: Response): Promise<void> {
+        try {
+            let PatientID = getPatientID(req);
+            const patient = await PatientModel.findByPk(PatientID);
+            sendResponse(patient, res, "Success");
+        } catch (error) {
+            res.status(500).json({ status: 500, message: 'Internal Server Error' });
+        }
+    }
     
-    async updatePatientByDoctor(req: Request, res: Response): Promise<void> {
+    
+    async updatePatientByID(req: Request, res: Response): Promise<void> {
         try {
             const patient = await PatientModel.findByPk(req.params.id);
             patient?.update(req.body);

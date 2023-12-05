@@ -9,6 +9,10 @@ export interface PrescriptionDetailI {
     TimeUnitName: string | null;
     DaysOfMedication: number | null;
     AditionalIndications: string | null;
+    SpecificHour?:string|null;
+    AdministrationRoute?:string|null;
+    DayTimeSection?:number|null;
+    isContinue?:number|null,
 }
 
 
