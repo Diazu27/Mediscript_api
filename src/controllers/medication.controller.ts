@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import MedicationModel from "../models/medication.model";
 import { sendResponse } from "../utils/sendResponse";
 import { getDoctorID } from "../utils/getDoctorID";
+import DB from "../db/connection";
+import PrescriptionDetail from "../models/prescriptionDetail.model";
+import sequelize from "sequelize/types/sequelize";
+import PrescriptionModel from "../models/prescription.model";
 
 export class MedicationController {
 
@@ -67,5 +71,28 @@ export class MedicationController {
         } catch (error) {
             res.status(500).json({ status: 500, message: 'Internal Server Error' });
         }
+    }
+
+    async getMedicationStats(req: Request, res: Response): Promise<void> {
+        try {
+            const currentYear = new Date().getFullYear();
+            let DoctorID = getDoctorID(req);
+            const prescriptions = await PrescriptionDetail.findAll({
+                attributes:[
+                    [DB.col('Name'), 'LABEL'],
+                    [DB.fn('COUNT', DB.col('Medication.MedicationID')), 'DATAVALUE'],
+
+                ],
+                include:[{model:PrescriptionModel,where:{DoctorID:DoctorID},attributes: []}, {model:MedicationModel,attributes: []}],
+                group: ['Medication.MedicationID'],
+                order: [[DB.fn('COUNT', DB.col('Medication.MedicationID')), 'ASC']],
+            });
+
+            res.status(200).json({ status: 200, data: prescriptions });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ status: 500, message: 'Internal Server Error' });
+        }
+        
     }
 }

@@ -10,6 +10,7 @@ import PatientRoutes from './routes/patient.routes';
 import PrescriptionRoutes from './routes/prescription.routes';
 import PrescriptionPatientRoutes from './routes/prescriptionPatient.routes';
 import PrescriptionDoctorRoutes from './routes/prescriptiondoctor.routes';
+import InsightsRoutes from './routes/datainsights.routes';
 
 export class App  {
   private app: express.Application;
@@ -34,6 +35,7 @@ export class App  {
     this.app.use('/api/prescription',ValidateJWT, PrescriptionRoutes);
     this.app.use('/api/prescriptionPatient',ValidateJWT, PrescriptionPatientRoutes);
     this.app.use('/api/prescriptionDoctor',ValidateJWT, PrescriptionDoctorRoutes);
+    this.app.use('/api/insights',ValidateJWT, InsightsRoutes);
     this.app.use('/api/auth', AuthRoutes)
   }
 

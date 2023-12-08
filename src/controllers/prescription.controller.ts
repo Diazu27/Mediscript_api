@@ -9,6 +9,8 @@ import { getPatientID } from "../utils/getPatientID";
 import PatientModel from "../models/patient.model";
 import DoctorModel from "../models/doctor.model";
 import MedicationModel from "../models/medication.model";
+import DB from "../db/connection";
+import { Op } from "sequelize";
 
 
 export class PrescriptionController {
@@ -132,5 +134,30 @@ export class PrescriptionController {
         } catch (error) {
             res.status(500).json({ status: 500, message: 'Internal Server Error' });
         }
+    }
+
+    async getPrescriptionByMonth(req: Request, res: Response): Promise<void> {
+        try {
+            const currentYear = new Date().getFullYear();
+            let DoctorID = getDoctorID(req);
+            const prescriptions = await PrescriptionModel.findAll({
+                attributes:  [
+                    [DB.fn('DATE_FORMAT', DB.col('IssueDate'), '%M'), 'LABEL'],
+                    [DB.fn('COUNT', DB.col('PrescriptionID')), 'DATAVALUE'],
+                  ],
+                where: {
+                  DoctorID: DoctorID,
+                  IssueDate: {
+                    [Op.between]: [`${currentYear}-01-01`, `${currentYear}-12-31`],
+                  },
+                },
+                group: ['LABEL'],
+              });
+
+            res.status(200).json({ status: 200, data: prescriptions });
+        } catch (error) {
+            res.status(500).json({ status: 500, message: 'Internal Server Error' });
+        }
+        
     }
 }
