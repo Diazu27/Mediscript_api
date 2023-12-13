@@ -9,7 +9,7 @@ AuthRoutes.post('/logindoctor', Auth.LoginDoctorAuth);
 AuthRoutes.post('/registerpatient', Auth.registerPatient);
 AuthRoutes.post('/logindoctor', Auth.LoginDoctorAuth);
 AuthRoutes.post('/loginpatient', Auth.LoginPatientAuth);
-
+AuthRoutes.put('/updateDoctor/:id', Auth.updateDoctor);
 
 
 

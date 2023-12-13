@@ -74,6 +74,14 @@ export class AuthenticationController {
         } catch (error) {res.status(500).json({ status: 500, message: 'Internal Server Error' })}
     }
 
+    async updateDoctor(req: Request, res: Response): Promise<void> {
+        try {
+            const Doctor = await DoctorModel.findByPk(req.params.id);
+            Doctor?.update(req.body);
+            Doctor?.save();
+            sendResponse(Doctor,res,"Updated successfully");
+        } catch (error) {res.status(500).json({ status: 500, message: 'Internal Server Error' })}
+    }
 
 
 }

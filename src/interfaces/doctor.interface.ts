@@ -14,6 +14,8 @@ export interface DoctorI {
     MedicalSpecialty: string | null;
     MedicalLicense: string | null;
     ClinicID: number | null;
+    LogoImageURL: string | null;
+    SignatureImageURL: string | null;
 }
   
 export interface DoctorDBI extends Model<DoctorI>, DoctorI {}

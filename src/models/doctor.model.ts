@@ -56,6 +56,14 @@ const DoctorModel =DB.define<DoctorDBI>('Doctor', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  LogoImageURL:{
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  SignatureImageURL:{
+    type: DataTypes.STRING,
+    allowNull: true,
+  }
 }, {
   tableName: 'doctor',
   timestamps: false
